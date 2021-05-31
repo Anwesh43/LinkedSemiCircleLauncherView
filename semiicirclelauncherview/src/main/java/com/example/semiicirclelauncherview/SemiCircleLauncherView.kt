@@ -85,7 +85,7 @@ class SemiCircleLauncherView(ctx : Context) : View(ctx) {
         return true
     }
 
-    data class State(var scale : Float, var dir : Float = 0f, var prevScale : Float = 0f) {
+    data class State(var scale : Float = 0f, var dir : Float = 0f, var prevScale : Float = 0f) {
 
         fun update(cb : (Float) -> Unit) {
             scale += scGap * dir
