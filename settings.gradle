@@ -1,0 +1,3 @@
+include ':semiicirclelauncherview'
+include ':app'
+rootProject.name = "LinkedSemiCircleLauncherView"
