@@ -8,6 +8,7 @@ import android.graphics.Canvas
 import android.graphics.RectF
 import android.content.Context
 import android.app.Activity
+import android.util.Log
 
 val colors : Array<Int> = arrayOf(
     "#f44336",
@@ -16,13 +17,13 @@ val colors : Array<Int> = arrayOf(
     "#880E4F",
     "#00C853"
 ).map {
-    Color.parseColor("#BDBDBD")
+    Color.parseColor(it)
 }.toTypedArray()
 val backColor : Int = Color.parseColor("#BDBDBD")
 val delay : Long = 20
 val strokeFactor : Float = 90f
-val sizeFactor : Float = 3.9f
-val rFactor : Float = 13.9f
+val sizeFactor : Float = 7.9f
+val rFactor : Float = 21.9f
 val parts : Int = 4
 val scGap : Float = 0.02f / parts
 val deg : Float = 180f
@@ -40,13 +41,15 @@ fun Canvas.drawSemiCircleLaunch(scale : Float, w : Float, h : Float, paint : Pai
     val sf2 : Float = sf.divideScale(1, parts)
     val sf3 : Float = sf.divideScale(2, parts)
     val sf4 : Float = sf.divideScale(3, parts)
+    Log.d("UPDATE", "$scale, $sf1, $sf2, $sf3, $sf4")
     save()
     translate(w / 2, h / 2)
     for (j in 0..1) {
         save()
         scale(1f - 2 * j, 1f - 2 * j)
-        rotate(180f * sf3)
+        rotate(180f * sf3 * j)
         translate(-size, 0f)
+        paint.style = Paint.Style.STROKE
         drawArc(
             RectF(-size, -size / 2, size, size / 2),
             0f,
@@ -54,7 +57,8 @@ fun Canvas.drawSemiCircleLaunch(scale : Float, w : Float, h : Float, paint : Pai
             false,
             paint
         )
-        drawCircle(-size / 2, size / 4 - (h / 2 + size) * sf4, r * sf2, paint)
+        paint.style = Paint.Style.FILL
+        drawCircle(0f,  - (h / 2 + size) * sf4, r * sf2, paint)
         restore()
     }
     restore()
@@ -63,6 +67,7 @@ fun Canvas.drawSemiCircleLaunch(scale : Float, w : Float, h : Float, paint : Pai
 fun Canvas.drawSCLNode(i : Int, scale : Float, paint : Paint) {
     val w : Float = width.toFloat()
     val h : Float = height.toFloat()
+    Log.d("UPDATING", "$i")
     val size : Float = Math.min(w, h) / sizeFactor
     paint.color = colors[i]
     paint.strokeCap = Paint.Cap.ROUND
