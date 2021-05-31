@@ -221,4 +221,13 @@ class SemiCircleLauncherView(ctx : Context) : View(ctx) {
             }
         }
     }
+
+    companion object {
+
+        fun create(activity : Activity) : SemiCircleLauncherView {
+            val view : SemiCircleLauncherView = SemiCircleLauncherView(activity)
+            activity.setContentView(view)
+            return view
+        }
+    }
 }
